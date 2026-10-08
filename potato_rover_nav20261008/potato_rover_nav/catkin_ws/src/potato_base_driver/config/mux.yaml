@@ -1,0 +1,6 @@
+publish_rate: 20.0
+teleop_timeout: 0.30
+nav_timeout: 0.30
+teleop_topic: /cmd_vel/teleop
+nav_topic: /cmd_vel/nav
+output_topic: /cmd_vel/safe

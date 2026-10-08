@@ -1,0 +1,28 @@
+<launch>
+  <arg name="rviz" default="false"/>
+  <arg name="monitor" default="true"/>
+  <arg name="config_file" default="$(find potato_lio_bringup)/config/MID360_config.json"/>
+  <param name="xfer_format" value="1"/>
+  <param name="multi_topic" value="0"/>
+  <param name="data_src" value="0"/>
+  <param name="publish_freq" type="double" value="10.0"/>
+  <param name="output_data_type" value="0"/>
+  <param name="cmdline_str" type="string" value="100000000000000"/>
+  <param name="user_config_path" type="string" value="$(arg config_file)"/>
+  <param name="frame_id" type="string" value="livox_frame"/>
+  <param name="enable_lidar_bag" type="bool" value="false"/>
+  <param name="enable_imu_bag" type="bool" value="false"/>
+  <node pkg="livox_ros_driver2" type="livox_ros_driver2_node" name="livox_lidar_publisher" output="screen" required="true" args="100000000000000"/>
+    <rosparam command="load" file="$(find potato_lio_bringup)/config/fast_lio_mid360.yaml"/>
+    <param name="feature_extract_enable" type="bool" value="false"/>
+    <param name="publish/tf_en" type="bool" value="false"/>
+    <param name="point_filter_num" type="int" value="3"/>
+    <param name="max_iteration" type="int" value="3"/>
+    <param name="filter_size_surf" type="double" value="0.15"/>
+    <param name="filter_size_map" type="double" value="0.25"/>
+    <param name="cube_side_length" type="double" value="200"/>
+    <param name="runtime_pos_log_enable" type="bool" value="false"/>
+    <node pkg="fast_lio" type="fastlio_mapping" name="laserMapping" output="screen" required="true"/>
+  <node if="$(arg monitor)" pkg="potato_lio_bringup" type="lio_monitor.py" name="lio_monitor" output="screen"/>
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find fast_lio)/rviz_cfg/loam_livox.rviz" output="screen"/>
+</launch>

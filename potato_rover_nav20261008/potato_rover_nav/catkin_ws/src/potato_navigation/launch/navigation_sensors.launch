@@ -1,0 +1,48 @@
+<launch>
+  <include file="$(find potato_lio_bringup)/launch/lio.launch">
+    <arg name="rviz" value="false"/>
+    <arg name="monitor" value="false"/>
+  </include>
+
+  <node pkg="tf" type="static_transform_publisher" name="nav_base_to_livox"
+        args="0.09 0.0 0.138 0 0 0 base_link livox_frame 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="nav_base_to_lio_body"
+        args="0.076 0.02329 0.09388 0 0 0 base_link body 100"/>
+
+  <node pkg="potato_mapping" type="lio_planar_odom.py"
+        name="nav_lio_planar_odom" output="screen" required="true">
+    <param name="input" value="/Odometry"/>
+    <param name="output" value="/odom"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_frame" value="base_link"/>
+    <param name="base_to_imu_x" value="0.076"/>
+    <param name="base_to_imu_y" value="0.02329"/>
+    <param name="velocity_alpha" value="0.35"/>
+  </node>
+
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node"
+        name="nav_cloud_to_scan" output="screen" required="true">
+    <remap from="cloud_in" to="/cloud_registered_body"/>
+    <remap from="scan" to="/scan_raw"/>
+    <param name="target_frame" value="base_link"/>
+    <param name="transform_tolerance" value="0.05"/>
+    <param name="min_height" value="0.00"/>
+    <param name="max_height" value="0.50"/>
+    <param name="angle_min" value="-3.14159265"/>
+    <param name="angle_max" value="3.14159265"/>
+    <param name="angle_increment" value="0.008726646"/>
+    <param name="scan_time" value="0.10"/>
+    <param name="range_min" value="0.05"/>
+    <param name="range_max" value="20.0"/>
+    <param name="use_inf" value="true"/>
+    <param name="inf_epsilon" value="1.0"/>
+    <param name="concurrency_level" value="1"/>
+  </node>
+
+  <node pkg="potato_navigation" type="self_scan_filter.py"
+        name="nav_self_scan_filter" output="screen" required="true">
+    <param name="rear_x_min" value="-0.23"/>
+    <param name="rear_x_max" value="0.0"/>
+    <param name="rear_half_width" value="0.115"/>
+  </node>
+</launch>

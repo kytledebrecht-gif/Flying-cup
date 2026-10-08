@@ -1,0 +1,36 @@
+<launch>
+  <arg name="waypoints_file"
+       default="$(find potato_navigation)/config/waypoints.yaml"/>
+  <arg name="wait_for_amcl" default="true"/>
+  <arg name="goal_timeout" default="120.0"/>
+  <arg name="max_retries" default="1"/>
+  <arg name="failure_policy" default="skip"/>
+  <arg name="final_yaw_tolerance" default="0.30"/>
+  <arg name="final_xy_tolerance" default="0.20"/>
+  <arg name="final_yaw_timeout" default="80.0"/>
+  <arg name="departure_yaw_threshold" default="1.20"/>
+  <arg name="departure_yaw_tolerance" default="0.35"/>
+  <arg name="departure_yaw_timeout" default="60.0"/>
+  <arg name="navigation_mode" default="smooth"/>
+  <arg name="pass_radius" default="0.25"/>
+  <arg name="smooth_angle_limit" default="1.05"/>
+
+  <node pkg="potato_navigation" type="waypoint_navigator.py"
+        name="waypoint_navigator" output="screen">
+    <param name="waypoints_file" value="$(arg waypoints_file)"/>
+    <param name="wait_for_amcl" value="$(arg wait_for_amcl)"/>
+    <param name="goal_timeout" value="$(arg goal_timeout)"/>
+    <param name="max_retries" value="$(arg max_retries)"/>
+    <param name="failure_policy" value="$(arg failure_policy)"/>
+    <param name="amcl_timeout" value="300.0"/>
+    <param name="final_yaw_tolerance" value="$(arg final_yaw_tolerance)"/>
+    <param name="final_xy_tolerance" value="$(arg final_xy_tolerance)"/>
+    <param name="final_yaw_timeout" value="$(arg final_yaw_timeout)"/>
+    <param name="departure_yaw_threshold" value="$(arg departure_yaw_threshold)"/>
+    <param name="departure_yaw_tolerance" value="$(arg departure_yaw_tolerance)"/>
+    <param name="departure_yaw_timeout" value="$(arg departure_yaw_timeout)"/>
+    <param name="navigation_mode" value="$(arg navigation_mode)"/>
+    <param name="pass_radius" value="$(arg pass_radius)"/>
+    <param name="smooth_angle_limit" value="$(arg smooth_angle_limit)"/>
+  </node>
+</launch>

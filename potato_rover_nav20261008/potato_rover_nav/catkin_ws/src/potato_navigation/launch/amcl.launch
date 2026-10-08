@@ -1,0 +1,19 @@
+<launch>
+  <arg name="scan_topic" default="/scan"/>
+  <arg name="auto_global_localization" default="true"/>
+
+  <node pkg="amcl" type="amcl" name="amcl" output="screen"
+        clear_params="true" required="true">
+    <rosparam command="load" file="$(find potato_navigation)/config/amcl_params.yaml"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+  </node>
+
+  <node if="$(arg auto_global_localization)"
+        pkg="potato_navigation" type="amcl_auto_localizer.py"
+        name="amcl_auto_localizer" output="screen">
+    <param name="manual_init_grace_sec" value="5.0"/>
+    <param name="xy_cov_threshold" value="0.20"/>
+    <param name="yaw_cov_threshold" value="0.15"/>
+    <param name="required_samples" value="8"/>
+  </node>
+</launch>

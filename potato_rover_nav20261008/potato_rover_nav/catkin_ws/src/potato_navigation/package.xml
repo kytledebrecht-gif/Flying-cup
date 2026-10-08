@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>potato_navigation</name>
+  <version>0.2.0</version>
+  <description>Map navigation, AMCL auto-localization and waypoint patrol.</description>
+  <maintainer email="potato@example.com">potato</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>actionlib</depend>
+  <depend>actionlib_msgs</depend>
+  <depend>move_base_msgs</depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>move_base</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>global_planner</exec_depend>
+  <exec_depend>teb_local_planner</exec_depend>
+  <exec_depend>costmap_2d</exec_depend>
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>potato_lio_bringup</exec_depend>
+  <exec_depend>potato_mapping</exec_depend>
+</package>

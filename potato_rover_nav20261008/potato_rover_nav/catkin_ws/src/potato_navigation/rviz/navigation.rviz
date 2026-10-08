@@ -1,0 +1,106 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+  - Class: rviz/Tool Properties
+    Name: Tool Properties
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 5
+  Displays:
+    - Class: rviz/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 1
+    - Class: rviz/Map
+      Name: Static Map
+      Enabled: true
+      Topic: /map
+      Alpha: 0.75
+      Color Scheme: map
+    - Class: rviz/Map
+      Name: Global Costmap
+      Enabled: false
+      Topic: /move_base/global_costmap/costmap
+      Alpha: 0.35
+      Color Scheme: costmap
+    - Class: rviz/Map
+      Name: Local Costmap
+      Enabled: true
+      Topic: /move_base/local_costmap/costmap
+      Alpha: 0.65
+      Color Scheme: costmap
+    - Class: rviz/LaserScan
+      Name: Live Scan
+      Enabled: false
+      Topic: /scan
+      Queue Size: 1
+      Style: Points
+      Size (m): 0.025
+      Decay Time: 0
+      Color Transformer: Intensity
+    - Class: rviz/Path
+      Name: Global Path
+      Enabled: true
+      Topic: /move_base/GlobalPlanner/plan
+      Color: 0; 255; 0
+      Line Style: Lines
+      Line Width: 0.04
+    - Class: rviz/Path
+      Name: TEB Local Plan
+      Enabled: true
+      Topic: /move_base/TebLocalPlannerROS/local_plan
+      Color: 255; 80; 0
+      Line Style: Lines
+      Line Width: 0.06
+    - Class: rviz/PoseWithCovariance
+      Name: AMCL Pose
+      Enabled: true
+      Topic: /amcl_pose
+      Color: 255; 0; 255
+      Alpha: 1
+      Covariance:
+        Enabled: false
+    - Class: rviz/Odometry
+      Name: LIO Odom
+      Enabled: false
+      Topic: /odom
+      Keep: 1
+      Shape: Arrow
+      Position Tolerance: 0.05
+      Angle Tolerance: 0.05
+    - Class: rviz/Polygon
+      Name: Local Footprint
+      Enabled: true
+      Topic: /move_base/local_costmap/footprint
+      Color: 255; 255; 0
+    - Class: rviz/TF
+      Name: TF
+      Enabled: false
+      Frame Timeout: 5
+      Show Axes: true
+      Show Arrows: false
+      Show Names: true
+  Tools:
+    - Class: rviz/Interact
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+  Views:
+    Current:
+      Class: rviz/TopDownOrtho
+      Angle: 0
+      Scale: 35
+      X: 0
+      Y: 0
+Window Geometry:
+  Width: 1400
+  Height: 900

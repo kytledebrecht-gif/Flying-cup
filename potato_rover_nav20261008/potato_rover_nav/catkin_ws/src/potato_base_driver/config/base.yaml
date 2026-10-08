@@ -1,0 +1,14 @@
+port: /dev/potato_stm32
+baud: 115200
+command_timeout: 0.25
+send_rate: 20.0
+max_linear_mps: 0.30
+max_angular_rps: 1.20
+track_width_m: 0.15
+max_speed_units: 240
+max_accel_units_per_s: 400.0
+# Verified legacy mapping: positive values drive all four wheels forward.
+motor_signs: [1, 1, 1, 1]
+protocol_command: spd
+turn_gain: 2.0
+min_turn_units: 45

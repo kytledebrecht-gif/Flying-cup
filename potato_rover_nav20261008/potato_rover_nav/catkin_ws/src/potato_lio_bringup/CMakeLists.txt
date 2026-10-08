@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(potato_lio_bringup)
+find_package(catkin REQUIRED COMPONENTS rospy sensor_msgs nav_msgs livox_ros_driver2)
+catkin_package()
+catkin_install_python(PROGRAMS scripts/lio_monitor.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+install(DIRECTORY launch config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

@@ -1,0 +1,8 @@
+<launch>
+  <arg name="serial_port" default="/dev/potato_stm32"/><arg name="max_speed_units" default="240"/>
+  <rosparam command="load" file="$(find potato_base_driver)/config/mux.yaml" ns="cmd_vel_mux"/>
+  <node pkg="potato_base_driver" type="cmd_vel_mux.py" name="cmd_vel_mux" output="screen"/>
+  <rosparam command="load" file="$(find potato_base_driver)/config/base.yaml" ns="stm32_base_driver"/>
+  <param name="stm32_base_driver/port" value="$(arg serial_port)"/><param name="stm32_base_driver/max_speed_units" value="$(arg max_speed_units)"/>
+  <node pkg="potato_base_driver" type="stm32_base_driver.py" name="stm32_base_driver" output="screen" required="true"/>
+</launch>

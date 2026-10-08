@@ -1,0 +1,41 @@
+<launch>
+  <arg name="map_file" default="/rover_ws/maps/my_room.yaml"/>
+  <arg name="rviz" default="false"/>
+  <arg name="start_sensors" default="true"/>
+  <arg name="use_amcl" default="true"/>
+  <arg name="auto_global_localization" default="true"/>
+
+  <include if="$(arg start_sensors)"
+           file="$(find potato_navigation)/launch/navigation_sensors.launch"/>
+
+  <node pkg="map_server" type="map_server" name="map_server"
+        args="$(arg map_file)" output="screen" required="true"/>
+
+  <!-- AMCL is the only map->odom publisher. With use_amcl=false an external
+       localization/SLAM source must provide map->odom. -->
+  <include if="$(arg use_amcl)"
+           file="$(find potato_navigation)/launch/amcl.launch">
+    <arg name="scan_topic" value="/scan"/>
+    <arg name="auto_global_localization" value="$(arg auto_global_localization)"/>
+  </include>
+
+  <node pkg="move_base" type="move_base" name="move_base"
+        output="screen" required="true">
+    <remap from="cmd_vel" to="/cmd_vel/nav"/>
+    <rosparam command="load" file="$(find potato_navigation)/config/move_base_params.yaml"/>
+    <rosparam command="load" file="$(find potato_navigation)/config/global_planner_params.yaml"/>
+    <rosparam command="load" file="$(find potato_navigation)/config/teb_local_planner_params.yaml"/>
+    <rosparam command="load" file="$(find potato_navigation)/config/costmap_common_params.yaml"
+              ns="global_costmap"/>
+    <rosparam command="load" file="$(find potato_navigation)/config/costmap_common_params.yaml"
+              ns="local_costmap"/>
+    <rosparam command="load" file="$(find potato_navigation)/config/global_costmap_params.yaml"/>
+    <rosparam command="load" file="$(find potato_navigation)/config/local_costmap_params.yaml"/>
+  </node>
+
+  <node pkg="potato_navigation" type="nav_monitor.py"
+        name="nav_monitor" output="screen"/>
+
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="navigation_rviz"
+        args="-d $(find potato_navigation)/rviz/navigation.rviz" output="screen"/>
+</launch>
